@@ -14,3 +14,15 @@ extension UIView {
         self.layer.cornerRadius = 8
     }
 }
+
+extension UIViewController {
+    func showToast(message: String) {
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        present(alertController, animated: true) {
+            // Dismiss the alert after a delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                alertController.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+}
