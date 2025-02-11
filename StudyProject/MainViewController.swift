@@ -11,6 +11,9 @@ class MainViewController: UIViewController {
 
     @IBOutlet weak var textImageTitle: UILabel!
     @IBOutlet weak var imageMain: UIImageView!
+    @IBOutlet weak var buttonPrevious: UIButton!
+    @IBOutlet weak var buttonNext: UIButton!
+    @IBOutlet weak var labelDescription: UILabel!
     @IBOutlet weak var textImageDescription: UITextView!
     @IBOutlet weak var buttonEditOrSaveImageDescription: UIButton!
 
@@ -52,6 +55,7 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func setupView() {
+        setFonts()
         configureImageDescription()
         configureMainImage()
         setImageAndImageDescription(currentContentNumber)
@@ -66,6 +70,14 @@ class MainViewController: UIViewController {
     fileprivate func configureMainImage() {
         imageMain.layer.cornerRadius = 8
         imageMain.clipsToBounds = true
+    }
+
+    fileprivate func setFonts() {
+        textImageTitle.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        buttonPrevious.titleLabel?.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        buttonNext.titleLabel?.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        labelDescription.font = UIFont(name: ImportedFonts.SFProText_Regular.rawValue, size: 12)
+        textImageDescription.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
     }
 
     fileprivate func configureImageDescription() {

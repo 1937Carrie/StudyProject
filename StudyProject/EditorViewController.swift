@@ -10,8 +10,11 @@ import UIKit
 class EditorViewController: UIViewController {
 
     @IBOutlet weak var imageMain: UIImageView!
-    @IBOutlet weak var textFieldTitle: UITextView!
-    @IBOutlet weak var textViewDescription: UITextView!
+    @IBOutlet weak var labelTitle: UILabel!
+    @IBOutlet weak var textViewImageTitle: UITextView!
+    @IBOutlet weak var labelDescription: UILabel!
+    @IBOutlet weak var textViewImageDescription: UITextView!
+    @IBOutlet weak var buttonSave: UIButton!
 
     var contentNumber: Int!
     var savePostCallback: ((Int) -> ())?
@@ -25,9 +28,9 @@ class EditorViewController: UIViewController {
 
     @IBAction func setOnSaveButtonClickListener(_ sender: UIButton) {
         let edittedPost = Post(
-            title: textFieldTitle.text ?? "",
+            title: textViewImageTitle.text ?? "",
             image: imageMain.image,
-            description: textViewDescription.text
+            description: textViewImageDescription.text
         )
         contentList[contentNumber] = edittedPost
 
@@ -37,23 +40,31 @@ class EditorViewController: UIViewController {
     }
 
     fileprivate func setupView() {
+        setFonts()
         configureTextFieldTitle()
         configureDescriptionTextView()
         setImageAndImageDescription(contentNumber)
     }
 
     fileprivate func setImageAndImageDescription(_ index: Int) {
-        textFieldTitle.text = contentList[index].title
+        textViewImageTitle.text = contentList[index].title
         imageMain.image = contentList[index].image
-        textViewDescription.text = contentList[index].description
+        textViewImageDescription.text = contentList[index].description
     }
 
     fileprivate func configureDescriptionTextView() {
-        textViewDescription.setRoundedCornerBorder()
+        textViewImageDescription.setRoundedCornerBorder()
     }
 
     fileprivate func configureTextFieldTitle() {
-        textFieldTitle.setRoundedCornerBorder()
+        textViewImageTitle.setRoundedCornerBorder()
     }
 
+    fileprivate func setFonts() {
+        labelTitle.font = UIFont(name: ImportedFonts.SFProText_Regular.rawValue, size: 12)
+        textViewImageTitle.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        labelDescription.font = UIFont(name: ImportedFonts.SFProText_Regular.rawValue, size: 12)
+        textViewImageDescription.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        buttonSave.titleLabel?.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+    }
 }

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+enum ImportedFonts: String {
+    case SFProText_Regular = "SFProText-Regular"
+    case SFProText_Bold = "SFProText-Bold"
+}
