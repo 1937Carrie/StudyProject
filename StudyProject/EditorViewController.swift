@@ -13,9 +13,8 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var textFieldTitle: UITextView!
     @IBOutlet weak var textViewDescription: UITextView!
 
-    weak var delegate: EditorViewControllerDelegate?
-
     var contentNumber: Int!
+    var savePostCallback: ((Int) -> ())?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +30,7 @@ class EditorViewController: UIViewController {
         )
         contentList[contentNumber] = edittedPost
 
-        delegate?.didUpdatePost(at: contentNumber)
+        savePostCallback?(contentNumber)
 
         self.navigationController?.popViewController(animated: true)
     }
