@@ -16,6 +16,8 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var textViewImageDescription: UITextView!
     @IBOutlet weak var buttonSave: UIButton!
 
+    @IBOutlet weak var constraintBottomTextViewImageDescription: NSLayoutConstraint!
+
     var contentNumber: Int!
     var savePostCallback: ((Int) -> ())?
 
@@ -24,6 +26,40 @@ class EditorViewController: UIViewController {
 
         hideKeyboardWhenTappedAround()
         setupView()
+
+        // Register for keyboard notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    deinit {
+        // Remove observers when the view controller is deallocated
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    @objc func keyboardWillShow(_ notification: Notification) {
+        // Get the keyboard height
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+
+            // Adjust the bottom constraint to move the TextView above the keyboard
+            constraintBottomTextViewImageDescription.constant = keyboardHeight - view.safeAreaInsets.bottom
+
+            // Animate the constraint change
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Restore the bottom constraint to its original value
+        constraintBottomTextViewImageDescription.constant = 29
+
+        // Animate the constraint change
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
 
     @IBAction func setOnSaveButtonClickListener(_ sender: UIButton) {
