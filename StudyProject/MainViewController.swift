@@ -7,10 +7,13 @@
 
 import UIKit
 
-class MainViewController: UIViewController, EditorViewControllerDelegate {
+class MainViewController: UIViewController {
 
     @IBOutlet weak var textImageTitle: UILabel!
     @IBOutlet weak var imageMain: UIImageView!
+    @IBOutlet weak var buttonPrevious: UIButton!
+    @IBOutlet weak var buttonNext: UIButton!
+    @IBOutlet weak var labelDescription: UILabel!
     @IBOutlet weak var textImageDescription: UITextView!
     @IBOutlet weak var buttonEditOrSaveImageDescription: UIButton!
 
@@ -19,6 +22,7 @@ class MainViewController: UIViewController, EditorViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        hideKeyboardWhenTappedAround()
         setupView()
     }
 
@@ -60,11 +64,12 @@ class MainViewController: UIViewController, EditorViewControllerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let controller = segue.destination as? EditorViewController {
             controller.contentNumber = currentContentNumber
-            controller.delegate = self
+            controller.savePostCallback = setImageAndImageDescription
         }
     }
 
     fileprivate func setupView() {
+        setFonts()
         configureImageDescription()
         configureMainImage()
         setImageAndImageDescription(currentContentNumber)
@@ -81,11 +86,15 @@ class MainViewController: UIViewController, EditorViewControllerDelegate {
         imageMain.clipsToBounds = true
     }
 
-    fileprivate func configureImageDescription() {
-        textImageDescription.setRoundedCornerBorder()
+    fileprivate func setFonts() {
+        textImageTitle.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        buttonPrevious.titleLabel?.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        buttonNext.titleLabel?.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
+        labelDescription.font = UIFont(name: ImportedFonts.SFProText_Regular.rawValue, size: 12)
+        textImageDescription.font = UIFont(name: ImportedFonts.SFProText_Bold.rawValue, size: 15)
     }
 
-    func didUpdatePost(at index: Int) {
-        setImageAndImageDescription(index)
+    fileprivate func configureImageDescription() {
+        textImageDescription.setRoundedCornerBorder()
     }
 }
