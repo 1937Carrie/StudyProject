@@ -11,21 +11,19 @@ class LogInViewController: UIViewController {
 
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
+    @IBOutlet weak var labelEmailError: UILabel!
+    @IBOutlet weak var labelPasswordError: UILabel!
 
     @IBOutlet weak var constraintButtonGoToSignUpBottom: NSLayoutConstraint!
+
+    private let viewModel = LogInViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         hideKeyboardWhenTappedAround()
         setupView()
-        textFieldEmail.doOnTextChanged{ email in
-            if email.isEmailAddress {
-                print("\(email) is email address")
-            } else {
-                print("\(email) is not email address")
-            }
-        }
+        setListeners()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,15 +48,35 @@ class LogInViewController: UIViewController {
         } else {
             showToast(message: "Please fill in the appropriate fields correctly")
         }
-
     }
 
     @IBAction func setOnSignUpClickListener(_ sender: UIButton) {
         performSegue(withIdentifier: "actionLogInToSignUp", sender: nil)
     }
 
+    fileprivate func setListeners() {
+        textFieldEmail.doOnTextChanged { email in
+            if self.viewModel.validateEmail(email) {
+                self.labelEmailError.isHidden = true
+            } else {
+                self.labelEmailError.isHidden = false
+                self.labelEmailError.text = "Enter valid email"
+            }
+        }
+        textFieldPassword.doOnTextChanged { password in
+            if self.viewModel.validatePassword(password) {
+                self.labelPasswordError.isHidden = true
+            } else {
+                self.labelPasswordError.isHidden = false
+                self.labelPasswordError.text = "Password length should be greater than 6"
+            }
+        }
+    }
+
     fileprivate func setupView() {
         // configureTextFieldEmail()
+        labelEmailError.isHidden = true
+        labelPasswordError.isHidden = true
 
         configureConstraintsBottom()
     }

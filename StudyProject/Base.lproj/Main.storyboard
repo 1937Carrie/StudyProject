@@ -338,6 +338,18 @@
                                     <action selector="setOnLoginClickListener:" destination="OHz-Te-GJR" eventType="touchUpInside" id="7eA-fl-pRJ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email input error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mrM-iZ-Eq5">
+                                <rect key="frame" x="16" y="281" width="93.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password input error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKv-Uf-7XZ">
+                                <rect key="frame" x="16" y="357" width="117.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WYL-Z5-3Aq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -350,11 +362,14 @@
                             <constraint firstItem="WYL-Z5-3Aq" firstAttribute="trailing" secondItem="jqO-wK-ccZ" secondAttribute="trailing" constant="16" id="6mx-2S-QKo"/>
                             <constraint firstItem="WYL-Z5-3Aq" firstAttribute="trailing" secondItem="izy-Qx-Hce" secondAttribute="trailing" constant="16" id="BUr-PZ-AXx"/>
                             <constraint firstItem="WYL-Z5-3Aq" firstAttribute="trailing" secondItem="86S-XT-Kro" secondAttribute="trailing" constant="16" id="EMZ-zz-l3H"/>
+                            <constraint firstItem="jqO-wK-ccZ" firstAttribute="bottom" secondItem="mrM-iZ-Eq5" secondAttribute="top" id="GTb-rh-sag"/>
                             <constraint firstItem="WYL-Z5-3Aq" firstAttribute="trailing" secondItem="tq6-CH-JXa" secondAttribute="trailing" constant="16" id="LJL-oA-UUT"/>
                             <constraint firstItem="Fcu-Xd-276" firstAttribute="trailing" secondItem="jqO-wK-ccZ" secondAttribute="trailing" id="Ra8-x6-gOK"/>
                             <constraint firstItem="KO8-hu-yAo" firstAttribute="leading" secondItem="izy-Qx-Hce" secondAttribute="leading" id="SAq-8e-tJs"/>
                             <constraint firstItem="WYL-Z5-3Aq" firstAttribute="bottom" secondItem="tq6-CH-JXa" secondAttribute="bottom" constant="136" id="UwR-JU-B33"/>
+                            <constraint firstItem="mrM-iZ-Eq5" firstAttribute="leading" secondItem="jqO-wK-ccZ" secondAttribute="leading" id="Ygq-nv-wmq"/>
                             <constraint firstItem="86S-XT-Kro" firstAttribute="leading" secondItem="WYL-Z5-3Aq" secondAttribute="leading" constant="16" id="Z6h-rz-qnW"/>
+                            <constraint firstItem="gKv-Uf-7XZ" firstAttribute="top" secondItem="izy-Qx-Hce" secondAttribute="bottom" constant="1" id="Zyj-uG-8D8"/>
                             <constraint firstItem="jqO-wK-ccZ" firstAttribute="top" secondItem="z4d-nI-JV9" secondAttribute="bottom" constant="130" id="bws-f2-wdn"/>
                             <constraint firstItem="tq6-CH-JXa" firstAttribute="leading" secondItem="WYL-Z5-3Aq" secondAttribute="leading" constant="16" id="gMq-jI-KwY"/>
                             <constraint firstItem="izy-Qx-Hce" firstAttribute="leading" secondItem="WYL-Z5-3Aq" secondAttribute="leading" constant="16" id="jsn-cd-OW4"/>
@@ -362,11 +377,14 @@
                             <constraint firstItem="jqO-wK-ccZ" firstAttribute="top" secondItem="Fcu-Xd-276" secondAttribute="bottom" id="oNw-EO-omM"/>
                             <constraint firstItem="z4d-nI-JV9" firstAttribute="top" secondItem="WYL-Z5-3Aq" secondAttribute="top" constant="29" id="pNs-Tk-i2d"/>
                             <constraint firstItem="tq6-CH-JXa" firstAttribute="top" secondItem="86S-XT-Kro" secondAttribute="bottom" constant="29" id="rhg-Tl-JUt"/>
+                            <constraint firstItem="gKv-Uf-7XZ" firstAttribute="leading" secondItem="izy-Qx-Hce" secondAttribute="leading" id="uyz-pi-0PT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pj2-Gw-Zgv"/>
                     <connections>
                         <outlet property="constraintButtonGoToSignUpBottom" destination="UwR-JU-B33" id="u23-CT-OeI"/>
+                        <outlet property="labelEmailError" destination="mrM-iZ-Eq5" id="EYy-J3-Why"/>
+                        <outlet property="labelPasswordError" destination="gKv-Uf-7XZ" id="MT2-YL-0Bf"/>
                         <outlet property="textFieldEmail" destination="jqO-wK-ccZ" id="pt0-yg-seY"/>
                         <outlet property="textFieldPassword" destination="izy-Qx-Hce" id="9mZ-9V-J8y"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="actionLogInToMain" id="yk8-Q3-Pqt"/>
@@ -553,6 +571,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
