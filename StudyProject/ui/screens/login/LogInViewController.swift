@@ -19,6 +19,13 @@ class LogInViewController: UIViewController {
 
         hideKeyboardWhenTappedAround()
         setupView()
+        textFieldEmail.doOnTextChanged{ email in
+            if email.isEmailAddress {
+                print("\(email) is email address")
+            } else {
+                print("\(email) is not email address")
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
