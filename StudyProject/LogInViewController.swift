@@ -11,9 +11,13 @@ class LogInViewController: UIViewController {
 
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
-    
+
+    @IBOutlet weak var constraintButtonGoToSignUpBottom: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        hideKeyboardWhenTappedAround()
         setupView()
     }
 
@@ -41,13 +45,25 @@ class LogInViewController: UIViewController {
         }
 
     }
-    
+
     @IBAction func setOnSignUpClickListener(_ sender: UIButton) {
         performSegue(withIdentifier: "actionLogInToSignUp", sender: nil)
     }
 
     fileprivate func setupView() {
         // configureTextFieldEmail()
+
+        configureConstraintsBottom()
+    }
+
+    fileprivate func configureConstraintsBottom() {
+        let screenWidth = UIScreen.main.bounds.width
+
+        if screenWidth <= 375 { // iPhone SE (3rd Gen)
+            constraintButtonGoToSignUpBottom.constant = 32
+        } else { // Larger iPhones (like iPhone 16)
+            constraintButtonGoToSignUpBottom.constant = 136
+        }
     }
 
     fileprivate func configureTextFieldEmail() {
