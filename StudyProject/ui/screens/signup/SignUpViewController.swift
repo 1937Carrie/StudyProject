@@ -8,20 +8,28 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var textFieldConfirmPassword: UITextField!
     @IBOutlet weak var textFieldName: UITextField!
     @IBOutlet weak var textFieldSurname: UITextField!
 
+    @IBOutlet weak var labelEmailError: UILabel!
+    @IBOutlet weak var labelPasswordError: UILabel!
+    @IBOutlet weak var labelPasswordConfirmationError: UILabel!
+    @IBOutlet weak var labelNameError: UILabel!
+    @IBOutlet weak var labelSurnameError: UILabel!
+
     @IBOutlet weak var constraintTextFieldEmailTop: NSLayoutConstraint!
     @IBOutlet weak var constraintButtonSignUpBotton: NSLayoutConstraint!
+
+    private let viewModel = SignUpViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
+        setListeners()
     }
 
     @IBAction func setOnSignUpClickListener(_ sender: UIButton) {
@@ -40,20 +48,25 @@ class SignUpViewController: UIViewController {
             }
         )
 
-        let emailIsFilled = !(textFieldEmail?.text?.isEmpty ?? true)
-        let passwordIsFilled = !(textFieldPassword?.text?.isEmpty ?? true)
-        let confirmPasswordIsFilled = !(textFieldConfirmPassword?.text?.isEmpty ?? true)
-        let namelIsFilled = !(textFieldName?.text?.isEmpty ?? true)
-        let surnameIsFilled = !(textFieldSurname?.text?.isEmpty ?? true)
+        let emailIsValid = viewModel.validateEmail(textFieldEmail.text ?? "")
+        let passwordIsValid = viewModel.validatePassword(textFieldPassword?.text ?? "")
+        let confirmationPasswordIsValid = viewModel.validateConfirmationPassword(confirmationPassword: textFieldConfirmPassword.text ?? "", originalPassword: textFieldPassword.text ?? "")
+        let nameIsValid = viewModel.validateName(textFieldName?.text ?? "")
+        let surnameIsValid = viewModel.validateSurname(textFieldSurname?.text ?? "")
 
-        if emailIsFilled &&
-            passwordIsFilled &&
-            confirmPasswordIsFilled &&
-            namelIsFilled &&
-            surnameIsFilled {
+        if emailIsValid &&
+            passwordIsValid &&
+            confirmationPasswordIsValid &&
+            nameIsValid &&
+            surnameIsValid {
             // Present the alert controller
             present(alertController, animated: true, completion: nil)
         } else {
+            showEmailError(!emailIsValid)
+            showPasswordError(!passwordIsValid)
+            showConfirmationPasswordError(!confirmationPasswordIsValid)
+            showNameError(!nameIsValid)
+            showSurnameError(!surnameIsValid)
             showToast(message: "Please fill in the appropriate fields correctly")
         }
     }
@@ -98,9 +111,81 @@ class SignUpViewController: UIViewController {
         return alertController
     }
 
+    fileprivate func setListeners() {
+        textFieldEmail.doOnTextChanged { email in
+            self.showEmailError(!self.viewModel.validateEmail(email))
+        }
+        textFieldPassword.doOnTextChanged { password in
+            self.showPasswordError(!self.viewModel.validatePassword(password))
+        }
+        textFieldConfirmPassword.doOnTextChanged { confirmationPassword in
+            self.showConfirmationPasswordError(!self.viewModel.validateConfirmationPassword(confirmationPassword: confirmationPassword, originalPassword: self.textFieldPassword.text ?? ""))
+        }
+        textFieldName.doOnTextChanged { name in
+            self.showNameError(!self.viewModel.validateName(name))
+        }
+        textFieldSurname.doOnTextChanged { surname in
+            self.showSurnameError(!self.viewModel.validateSurname(surname))
+        }
+    }
+
+    fileprivate func showSurnameError(_ state: Bool) {
+        if state {
+            self.labelSurnameError.isHidden = false
+            self.labelSurnameError.text = "Surname can't be empty"
+        } else {
+            self.labelSurnameError.isHidden = true
+        }
+    }
+
+    fileprivate func showNameError(_ state: Bool) {
+        if state {
+            self.labelNameError.isHidden = false
+            self.labelNameError.text = "Name can't be empty"
+        } else {
+            self.labelNameError.isHidden = true
+        }
+    }
+
+fileprivate func showConfirmationPasswordError(_ state: Bool) {
+        if state {
+            self.labelPasswordConfirmationError.isHidden = false
+            self.labelPasswordConfirmationError.text = "Passwords are not matching"
+        } else {
+            self.labelPasswordConfirmationError.isHidden = true
+        }
+    }
+
+    fileprivate func showPasswordError(_ state: Bool) {
+        if state {
+            self.labelPasswordError.isHidden = false
+            self.labelPasswordError.text = "Enter valid password"
+        } else {
+            self.labelPasswordError.isHidden = true
+        }
+    }
+
+    fileprivate func showEmailError(_ state: Bool) {
+        if state {
+            self.labelEmailError.isHidden = false
+            self.labelEmailError.text = "Enter valid email"
+        } else {
+            self.labelEmailError.isHidden = true
+        }
+    }
+
     fileprivate func setupView() {
         configureTextFieldEmailConstraintTop()
         configureButtonSigUpConstraintBottom()
+        configureErrorLabelsVisibility()
+    }
+
+    fileprivate func configureErrorLabelsVisibility() {
+        labelEmailError.isHidden = true
+        labelPasswordError.isHidden = true
+        labelPasswordConfirmationError.isHidden = true
+        labelNameError.isHidden = true
+        labelSurnameError.isHidden = true
     }
 
     fileprivate func configureButtonSigUpConstraintBottom() {
