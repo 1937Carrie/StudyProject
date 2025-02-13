@@ -41,11 +41,17 @@ class LogInViewController: UIViewController {
     }
 
     @IBAction func setOnLoginClickListener(_ sender: UIButton) {
-        let emailIsFilled = !(textFieldEmail.text?.isEmpty ?? true)
-        let passwordIsFilled = !(textFieldPassword.text?.isEmpty ?? true)
+        let emailIsFilled = viewModel.validateEmail(textFieldEmail.text ?? "")
+        let passwordIsFilled = viewModel.validatePassword(textFieldPassword.text ?? "")
         if emailIsFilled && passwordIsFilled {
             performSegue(withIdentifier: "actionLogInToMain", sender: nil)
         } else {
+            if !emailIsFilled {
+                showEmailError(true)
+            }
+            if !passwordIsFilled {
+                showPasswordError(true)
+            }
             showToast(message: "Please fill in the appropriate fields correctly")
         }
     }
@@ -56,20 +62,28 @@ class LogInViewController: UIViewController {
 
     fileprivate func setListeners() {
         textFieldEmail.doOnTextChanged { email in
-            if self.viewModel.validateEmail(email) {
-                self.labelEmailError.isHidden = true
-            } else {
-                self.labelEmailError.isHidden = false
-                self.labelEmailError.text = "Enter valid email"
-            }
+            self.showEmailError(!self.viewModel.validateEmail(email))
         }
         textFieldPassword.doOnTextChanged { password in
-            if self.viewModel.validatePassword(password) {
-                self.labelPasswordError.isHidden = true
-            } else {
-                self.labelPasswordError.isHidden = false
-                self.labelPasswordError.text = "Password length should be greater than 6"
-            }
+            self.showPasswordError(!self.viewModel.validatePassword(password))
+        }
+    }
+
+    fileprivate func showPasswordError(_ state: Bool) {
+        if state {
+            self.labelPasswordError.isHidden = false
+            self.labelPasswordError.text = "Password length should be greater than 6"
+        } else {
+            self.labelPasswordError.isHidden = true
+        }
+    }
+
+    fileprivate func showEmailError(_ state: Bool) {
+        if state {
+            self.labelEmailError.isHidden = false
+            self.labelEmailError.text = "Enter valid email"
+        } else {
+            self.labelEmailError.isHidden = true
         }
     }
 
