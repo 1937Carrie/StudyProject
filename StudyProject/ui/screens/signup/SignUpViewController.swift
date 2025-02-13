@@ -15,10 +15,13 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var textFieldName: UITextField!
     @IBOutlet weak var textFieldSurname: UITextField!
 
+    @IBOutlet weak var constraintTextFieldEmailTop: NSLayoutConstraint!
+    @IBOutlet weak var constraintButtonSignUpBotton: NSLayoutConstraint!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupView()
     }
 
     @IBAction func setOnSignUpClickListener(_ sender: UIButton) {
@@ -93,5 +96,30 @@ class SignUpViewController: UIViewController {
         alertController.addAction(cancelAction())
 
         return alertController
+    }
+
+    fileprivate func setupView() {
+        configureTextFieldEmailConstraintTop()
+        configureButtonSigUpConstraintBottom()
+    }
+
+    fileprivate func configureButtonSigUpConstraintBottom() {
+        let screenWidth = UIScreen.main.bounds.width
+
+        if screenWidth <= 375 { // iPhone SE (3rd Gen)
+            constraintButtonSignUpBotton.constant = 32
+        } else { // Larger iPhones (like iPhone 16)
+            constraintButtonSignUpBotton.constant = 86
+        }
+    }
+
+    fileprivate func configureTextFieldEmailConstraintTop() {
+        let screenWidth = UIScreen.main.bounds.width
+
+        if screenWidth <= 375 { // iPhone SE (3rd Gen)
+            constraintTextFieldEmailTop.constant = 64
+        } else { // Larger iPhones (like iPhone 16)
+            constraintTextFieldEmailTop.constant = 130
+        }
     }
 }
