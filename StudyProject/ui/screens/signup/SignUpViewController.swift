@@ -21,6 +21,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var labelSurnameError: UILabel!
 
     @IBOutlet weak var constraintStackViewTop: NSLayoutConstraint!
+    @IBOutlet weak var constraintStackViewBottom: NSLayoutConstraint!
     @IBOutlet weak var constraintButtonSignUpBottom: NSLayoutConstraint!
 
     private let viewModel = SignUpViewModel()
@@ -28,8 +29,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        hideKeyboardWhenTappedAround()
         setupView()
         setListeners()
+        setObservers()
+    }
+
+    deinit {
+        // Remove observers when the view controller is deallocated
+        NotificationCenter.default.removeObserver(self)
     }
 
     @IBAction func setOnSignUpClickListener(_ sender: UIButton) {
@@ -126,6 +134,37 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
+    fileprivate func setObservers() {
+        // Register for keyboard notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWillShow(_ notification: Notification) {
+        // Get the keyboard height
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+
+            // Adjust the bottom constraint to move the TextView above the keyboard
+            constraintStackViewBottom.constant = keyboardHeight - view.safeAreaInsets.bottom
+
+            // Animate the constraint change
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Restore the bottom constraint to its original value
+        constraintStackViewBottom.constant = 16
+
+        // Animate the constraint change
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+
     fileprivate func setListeners() {
         textFieldEmail.doOnTextChanged { email in
             self.showEmailError(!self.viewModel.validateEmail(email))
@@ -190,7 +229,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
 
     fileprivate func setupView() {
-//        configureTextFieldEmailConstraintTop()
+        //configureTextFieldEmailConstraintTop()
         configureButtonSigUpConstraintBottom()
         configureErrorLabelsVisibility()
         setImeActionsOnTextFields()

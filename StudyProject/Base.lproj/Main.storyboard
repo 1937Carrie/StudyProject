@@ -414,21 +414,6 @@
                                 <color key="textColor" name="MainBlue"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcc-F3-yZm" userLabel="SignUpButton">
-                                <rect key="frame" x="16" y="585" width="343" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="rHF-mz-imr"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Sign UP">
-                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="15"/>
-                                    <color key="baseForegroundColor" name="MainBlue"/>
-                                    <color key="baseBackgroundColor" red="0.015686274510000001" green="0.33333333329999998" blue="0.69411764710000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="setOnSignUpClickListener:" destination="8EG-g5-Z9m" eventType="touchUpInside" id="Xhv-tj-Tth"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1zz-5N-nO7">
                                 <rect key="frame" x="16" y="120" width="343" height="315"/>
                                 <subviews>
@@ -655,6 +640,21 @@
                                     </view>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcc-F3-yZm" userLabel="SignUpButton">
+                                <rect key="frame" x="16" y="585" width="343" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="rHF-mz-imr"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Sign UP">
+                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="15"/>
+                                    <color key="baseForegroundColor" name="MainBlue"/>
+                                    <color key="baseBackgroundColor" red="0.015686274510000001" green="0.33333333329999998" blue="0.69411764710000001" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="setOnSignUpClickListener:" destination="8EG-g5-Z9m" eventType="touchUpInside" id="Xhv-tj-Tth"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="BoS-Pt-SjI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -673,6 +673,7 @@
                     <navigationItem key="navigationItem" id="zbi-uG-XP9"/>
                     <connections>
                         <outlet property="constraintButtonSignUpBottom" destination="bFF-4h-zvq" id="dbe-dC-ahR"/>
+                        <outlet property="constraintStackViewBottom" destination="oq5-2a-gSY" id="lcO-rC-6Nc"/>
                         <outlet property="constraintStackViewTop" destination="Taf-iA-y8p" id="YU1-2t-k7t"/>
                         <outlet property="labelEmailError" destination="ICz-Oi-jN0" id="yBl-uL-oBM"/>
                         <outlet property="labelNameError" destination="e5m-8b-ULg" id="R2B-Sy-C2G"/>
