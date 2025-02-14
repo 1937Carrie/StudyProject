@@ -7,12 +7,15 @@
 
 import UIKit
 
-class LogInViewController: UIViewController {
+class LogInViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var labelEmailError: UILabel!
     @IBOutlet weak var labelPasswordError: UILabel!
+
+    @IBOutlet weak var buttonLogin: UIButton!
+    @IBOutlet weak var buttonGoToSignUp: UIButton!
 
     @IBOutlet weak var constraintButtonGoToSignUpBottom: NSLayoutConstraint!
 
@@ -24,6 +27,15 @@ class LogInViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         setupView()
         setListeners()
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == textFieldEmail {
+            textFieldPassword.becomeFirstResponder()
+        } else if textField == textFieldPassword {
+            textFieldPassword.resignFirstResponder()
+        }
+        return true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +105,7 @@ class LogInViewController: UIViewController {
         labelPasswordError.isHidden = true
 
         configureConstraintsBottom()
+        setImeActionsOnTextFields()
     }
 
     fileprivate func configureConstraintsBottom() {
@@ -103,6 +116,14 @@ class LogInViewController: UIViewController {
         } else { // Larger iPhones (like iPhone 16)
             constraintButtonGoToSignUpBottom.constant = 136
         }
+    }
+
+    fileprivate func setImeActionsOnTextFields() {
+        textFieldEmail.delegate = self
+        textFieldPassword.delegate = self
+
+        textFieldEmail.returnKeyType = .next
+        textFieldPassword.returnKeyType = .done
     }
 
     fileprivate func configureTextFieldEmail() {

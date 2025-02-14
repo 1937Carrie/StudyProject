@@ -382,6 +382,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="pj2-Gw-Zgv"/>
                     <connections>
+                        <outlet property="buttonGoToSignUp" destination="tq6-CH-JXa" id="C0x-Vn-zBF"/>
+                        <outlet property="buttonLogin" destination="86S-XT-Kro" id="vm7-cs-qmq"/>
                         <outlet property="constraintButtonGoToSignUpBottom" destination="UwR-JU-B33" id="u23-CT-OeI"/>
                         <outlet property="labelEmailError" destination="mrM-iZ-Eq5" id="EYy-J3-Why"/>
                         <outlet property="labelPasswordError" destination="gKv-Uf-7XZ" id="MT2-YL-0Bf"/>

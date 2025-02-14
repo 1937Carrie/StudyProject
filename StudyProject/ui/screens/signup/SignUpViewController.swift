@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var textFieldConfirmPassword: UITextField!
@@ -74,7 +74,7 @@ class SignUpViewController: UIViewController {
     fileprivate func createAlertController(
         agreeAction: () -> UIAlertAction,
         cancelAction: () -> UIAlertAction
-    ) -> UIAlertController{
+    ) -> UIAlertController {
         let alertController = UIAlertController(
             title: "User agreement",
             message: nil,
@@ -109,6 +109,21 @@ class SignUpViewController: UIViewController {
         alertController.addAction(cancelAction())
 
         return alertController
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == textFieldEmail {
+            textFieldPassword.becomeFirstResponder()
+        } else if textField == textFieldPassword {
+            textFieldConfirmPassword.becomeFirstResponder()
+        } else if textField == textFieldConfirmPassword {
+            textFieldName.becomeFirstResponder()
+        } else if textField == textFieldName {
+            textFieldSurname.becomeFirstResponder()
+        } else if textField == textFieldSurname {
+            textFieldSurname.resignFirstResponder()
+        }
+        return true
     }
 
     fileprivate func setListeners() {
@@ -147,7 +162,7 @@ class SignUpViewController: UIViewController {
         }
     }
 
-fileprivate func showConfirmationPasswordError(_ state: Bool) {
+    fileprivate func showConfirmationPasswordError(_ state: Bool) {
         if state {
             self.labelPasswordConfirmationError.isHidden = false
             self.labelPasswordConfirmationError.text = "Passwords are not matching"
@@ -178,6 +193,21 @@ fileprivate func showConfirmationPasswordError(_ state: Bool) {
         configureTextFieldEmailConstraintTop()
         configureButtonSigUpConstraintBottom()
         configureErrorLabelsVisibility()
+        setImeActionsOnTextFields()
+    }
+
+    fileprivate func setImeActionsOnTextFields() {
+        textFieldEmail.delegate = self
+        textFieldPassword.delegate = self
+        textFieldConfirmPassword.delegate = self
+        textFieldName.delegate = self
+        textFieldSurname.delegate = self
+
+        textFieldEmail.returnKeyType = .next
+        textFieldPassword.returnKeyType = .next
+        textFieldConfirmPassword.returnKeyType = .next
+        textFieldName.returnKeyType = .next
+        textFieldSurname.returnKeyType = .done
     }
 
     fileprivate func configureErrorLabelsVisibility() {
