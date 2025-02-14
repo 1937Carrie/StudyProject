@@ -20,8 +20,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var labelNameError: UILabel!
     @IBOutlet weak var labelSurnameError: UILabel!
 
-    @IBOutlet weak var constraintTextFieldEmailTop: NSLayoutConstraint!
-    @IBOutlet weak var constraintButtonSignUpBotton: NSLayoutConstraint!
+    @IBOutlet weak var constraintStackViewTop: NSLayoutConstraint!
+    @IBOutlet weak var constraintButtonSignUpBottom: NSLayoutConstraint!
 
     private let viewModel = SignUpViewModel()
 
@@ -190,7 +190,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
 
     fileprivate func setupView() {
-        configureTextFieldEmailConstraintTop()
+//        configureTextFieldEmailConstraintTop()
         configureButtonSigUpConstraintBottom()
         configureErrorLabelsVisibility()
         setImeActionsOnTextFields()
@@ -222,19 +222,19 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         let screenWidth = UIScreen.main.bounds.width
 
         if screenWidth <= 375 { // iPhone SE (3rd Gen)
-            constraintButtonSignUpBotton.constant = 32
+            constraintButtonSignUpBottom.constant = 32
         } else { // Larger iPhones (like iPhone 16)
-            constraintButtonSignUpBotton.constant = 86
+            constraintButtonSignUpBottom.constant = 86
         }
     }
 
     fileprivate func configureTextFieldEmailConstraintTop() {
-        let screenWidth = UIScreen.main.bounds.width
-
-        if screenWidth <= 375 { // iPhone SE (3rd Gen)
-            constraintTextFieldEmailTop.constant = 64
-        } else { // Larger iPhones (like iPhone 16)
-            constraintTextFieldEmailTop.constant = 130
-        }
+//        let screenWidth = UIScreen.main.bounds.width
+//
+//        if screenWidth <= 375 { // iPhone SE (3rd Gen)
+//            constraintStackViewTop.constant = 64
+//        } else { // Larger iPhones (like iPhone 16)
+//            constraintStackViewTop.constant = 130
+//        }
     }
 }
