@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, UITextFieldDelegate {
+class SignUpViewController: UIViewController {
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
     @IBOutlet weak var textFieldConfirmPassword: UITextField!
@@ -31,7 +31,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 
         hideKeyboardWhenTappedAround()
         setupView()
-        setListeners()
         setObservers()
     }
 
@@ -165,24 +164,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    fileprivate func setListeners() {
-        textFieldEmail.doOnTextChanged { email in
-            self.showEmailError(!self.viewModel.validateEmail(email))
-        }
-        textFieldPassword.doOnTextChanged { password in
-            self.showPasswordError(!self.viewModel.validatePassword(password))
-        }
-        textFieldConfirmPassword.doOnTextChanged { confirmationPassword in
-            self.showConfirmationPasswordError(!self.viewModel.validateConfirmationPassword(confirmationPassword: confirmationPassword, originalPassword: self.textFieldPassword.text ?? ""))
-        }
-        textFieldName.doOnTextChanged { name in
-            self.showNameError(!self.viewModel.validateName(name))
-        }
-        textFieldSurname.doOnTextChanged { surname in
-            self.showSurnameError(!self.viewModel.validateSurname(surname))
-        }
-    }
-
     fileprivate func showSurnameError(_ state: Bool) {
         if state {
             self.labelSurnameError.isHidden = false
@@ -275,5 +256,28 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
 //        } else { // Larger iPhones (like iPhone 16)
 //            constraintStackViewTop.constant = 130
 //        }
+    }
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+
+        switch textField {
+        case textFieldEmail:
+            self.showEmailError(!self.viewModel.validateEmail(newText))
+        case textFieldPassword:
+            self.showPasswordError(!self.viewModel.validatePassword(newText))
+        case textFieldConfirmPassword:
+            self.showConfirmationPasswordError(!self.viewModel.validateConfirmationPassword(confirmationPassword: newText, originalPassword: self.textFieldPassword.text ?? ""))
+        case textFieldName:
+            self.showNameError(!self.viewModel.validateName(newText))
+        case textFieldSurname:
+            self.showSurnameError(!self.viewModel.validateSurname(newText))
+        default :
+            return true
+        }
+        return true
     }
 }
