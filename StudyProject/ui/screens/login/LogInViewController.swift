@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LogInViewController: UIViewController, UITextFieldDelegate {
+class LogInViewController: UIViewController {
 
     @IBOutlet weak var textFieldEmail: UITextField!
     @IBOutlet weak var textFieldPassword: UITextField!
@@ -26,16 +26,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
         hideKeyboardWhenTappedAround()
         setupView()
-        setListeners()
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == textFieldEmail {
-            textFieldPassword.becomeFirstResponder()
-        } else if textField == textFieldPassword {
-            textFieldPassword.resignFirstResponder()
-        }
-        return true
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -70,15 +60,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func setOnSignUpClickListener(_ sender: UIButton) {
         performSegue(withIdentifier: "actionLogInToSignUp", sender: nil)
-    }
-
-    fileprivate func setListeners() {
-        textFieldEmail.doOnTextChanged { email in
-            self.showEmailError(!self.viewModel.validateEmail(email))
-        }
-        textFieldPassword.doOnTextChanged { password in
-            self.showPasswordError(!self.viewModel.validatePassword(password))
-        }
     }
 
     fileprivate func showPasswordError(_ state: Bool) {
@@ -130,4 +111,30 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         textFieldEmail.setRoundedCornerBorder()
     }
 
+}
+
+extension LogInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == textFieldEmail {
+            textFieldPassword.becomeFirstResponder()
+        } else if textField == textFieldPassword {
+            textFieldPassword.resignFirstResponder()
+        }
+        return true
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
+
+        switch textField {
+        case textFieldEmail:
+            showEmailError(!viewModel.validateEmail(newText))
+        case textFieldPassword:
+            showPasswordError(!viewModel.validatePassword(newText))
+        default:
+            return true
+        }
+        return true
+    }
 }

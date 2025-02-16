@@ -17,20 +17,6 @@ extension UIView {
 
 private var textFieldObserverKey: UInt8 = 0
 
-extension UITextField {
-    func doOnTextChanged(_ handler: @escaping (String) -> Void) {
-        addTarget(self, action: #selector(textDidChange), for: .editingChanged)
-        objc_setAssociatedObject(self, &textFieldObserverKey, handler, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-    }
-
-    @objc private func textDidChange() {
-        guard let handler = objc_getAssociatedObject(self, &textFieldObserverKey) as? (String) -> Void else {
-            return
-        }
-        handler(self.text ?? "")
-    }
-}
-
 private var textViewObserverKey: UInt8 = 0
 
 extension UITextView {
