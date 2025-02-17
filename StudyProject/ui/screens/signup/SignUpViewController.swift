@@ -210,7 +210,6 @@ class SignUpViewController: UIViewController {
     }
 
     fileprivate func setupView() {
-        //configureTextFieldEmailConstraintTop()
         configureButtonSigUpConstraintBottom()
         configureErrorLabelsVisibility()
         setImeActionsOnTextFields()
@@ -246,16 +245,6 @@ class SignUpViewController: UIViewController {
         } else { // Larger iPhones (like iPhone 16)
             constraintButtonSignUpBottom.constant = 86
         }
-    }
-
-    fileprivate func configureTextFieldEmailConstraintTop() {
-//        let screenWidth = UIScreen.main.bounds.width
-//
-//        if screenWidth <= 375 { // iPhone SE (3rd Gen)
-//            constraintStackViewTop.constant = 64
-//        } else { // Larger iPhones (like iPhone 16)
-//            constraintStackViewTop.constant = 130
-//        }
     }
 }
 
