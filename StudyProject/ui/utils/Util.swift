@@ -62,6 +62,20 @@ extension UIViewController {
     }
 }
 
+extension UIResponder {
+    private static weak var _currentFirstResponder: UIResponder?
+
+    static var currentFirstResponder: UIResponder? {
+        _currentFirstResponder = nil
+        UIApplication.shared.sendAction(#selector(findFirstResponder(_:)), to: nil, from: nil, for: nil)
+        return _currentFirstResponder
+    }
+
+    @objc private func findFirstResponder(_ sender: Any) {
+        UIResponder._currentFirstResponder = self
+    }
+}
+
 extension String {
     var isEmailAddress: Bool {
         let emailRegex = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
