@@ -140,6 +140,12 @@ class SignUpViewController: UIViewController {
     }
 
     @objc func keyboardWillShow(_ notification: Notification) {
+        let firstResponder = UIResponder.currentFirstResponder as? UITextField
+
+        if  firstResponder != textFieldName && firstResponder != textFieldSurname {
+            constraintStackViewBottom.constant = 16
+            return
+        }
         // Get the keyboard height
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
