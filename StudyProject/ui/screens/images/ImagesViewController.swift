@@ -14,7 +14,7 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
     }
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -46,4 +46,27 @@ extension ImagesViewController: UICollectionViewDelegate {
         performSegue(withIdentifier: "actionImagesToFullScreen", sender: indexPath.item)
     }
 
+}
+
+extension ImagesViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let availableWidth = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
+        let spacingBetweenItems: CGFloat = 1
+        let totalSpacing = 2 * spacingBetweenItems
+        let itemWidth = (availableWidth - totalSpacing) / 3
+
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
 }
