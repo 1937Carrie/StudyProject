@@ -7,12 +7,15 @@
 
 import Foundation
 
-class ContactsProvider {
-    fileprivate static var contacts: [Contact] = []
+final class ContactsProvider {
+    static let shared = ContactsProvider()
+    private init() {}
 
-    static let emptyContact = Contact(id: -1, name: "Empty contact", image: "Image_placeholder")
+    fileprivate var contacts: [Contact] = []
 
-    static func getContacts() -> [Contact] {
+    let emptyContact = Contact(id: -1, name: "Empty contact", image: "Image_placeholder")
+
+    func getContacts() -> [Contact] {
         if !contacts.isEmpty {
             return contacts
         } else {

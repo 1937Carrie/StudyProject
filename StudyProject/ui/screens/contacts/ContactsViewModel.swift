@@ -8,17 +8,17 @@
 import Foundation
 
 class ContactsViewModel {
-    fileprivate let contacts = ContactsProvider.getContacts()
+    fileprivate let contacts = ContactsProvider.shared.getContacts()
 
     func getContactsSize() -> Int {
         return contacts.count
     }
 
     func getContactById(id: Int) -> Contact {
-        if id == -1 { return ContactsProvider.emptyContact }
+        if id == -1 { return ContactsProvider.shared.emptyContact }
 
         return contacts.first { contact in
             contact.id == id
-        } ?? ContactsProvider.emptyContact
+        } ?? ContactsProvider.shared.emptyContact
     }
 }
